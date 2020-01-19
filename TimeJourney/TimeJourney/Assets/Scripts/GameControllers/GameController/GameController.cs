@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Revive();
+            SceneManager.LoadScene("Menu");
         }
         if (Input.GetKeyDown("[1]"))
         {
