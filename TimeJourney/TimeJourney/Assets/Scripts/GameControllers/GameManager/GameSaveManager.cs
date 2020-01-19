@@ -40,6 +40,13 @@ public class GameSaveManager : MonoBehaviour
         file.Close();
     }
 
+    public void SetSaveSystemPlayerData(float posX, float posY, string sceneName, string difficulty)
+    {
+        saveSystemSO.m_PlayerPositionX = posX;
+        saveSystemSO.m_PlayerPositionY = posY;
+        saveSystemSO.m_SceneName = sceneName;
+        saveSystemSO.m_Difficulty = difficulty;
+    }
 
     public void Load()
     {
@@ -50,10 +57,7 @@ public class GameSaveManager : MonoBehaviour
 
             PlayerInfo data = (PlayerInfo)bf.Deserialize(file);
 
-            saveSystemSO.m_PlayerPositionX = data.m_PlayerPositionX;
-            saveSystemSO.m_PlayerPositionY = data.m_PlayerPositionY;
-            saveSystemSO.m_SceneName = data.m_SceneName;
-            saveSystemSO.m_Difficulty = data.m_Difficulty;
+            SetSaveSystemPlayerData(data.m_PlayerPositionX, data.m_PlayerPositionY, data.m_SceneName, data.m_Difficulty);
 
             file.Close();
         }

@@ -20,7 +20,6 @@ public class EnemyNormalHealth : Health
     {
         base.Start();
         body = GetComponentInChildren<ParticleSystem>();
-        // m_animator = GetComponent<Animator>();
     }
 
 
@@ -36,6 +35,15 @@ public class EnemyNormalHealth : Health
         GetDamageAnimation();
     }
 
+    public void CheckHealthAndTriggerDeath()
+    {
+        if (m_CurrentHealth <= 0)
+        {
+            Die();
+            return;
+        }
+    }
+
     public override void GetDamage(string type, int dmgAmount)
     {
         switch (type)
@@ -45,53 +53,24 @@ public class EnemyNormalHealth : Health
                 {
                     return;
                 }
-                if (weakAtFire)
-                {
-                    m_CurrentHealth -= dmgAmount * 3;
-                }
-                else
-                {
-                    m_CurrentHealth -= dmgAmount;
-                }
+
+                m_CurrentHealth -= weakAtFire ? dmgAmount * 3 : dmgAmount;
+
                 break;
             case "Ice":
                 if (ImuneAtIce)
                 {
                     return;
                 }
-                if (weakAtIce)
-                {
-                    m_CurrentHealth -= dmgAmount * 3;
-                }
-                else
-                {
-                    m_CurrentHealth -= dmgAmount;
-                }
-                break;
-            case "Light":
-                if (ImuneAtLight)
-                {
-                    return;
-                }
-                if (weakAtLight)
-                {
-                    m_CurrentHealth -= dmgAmount * 3;
-                }
-                else
-                {
-                    m_CurrentHealth -= dmgAmount;
-                }
+
+                m_CurrentHealth -= weakAtIce ? dmgAmount * 3 : dmgAmount;
                 break;
             default:
                 m_CurrentHealth -= dmgAmount;
-                Debug.Log("something is not ok");
                 break;
         }
-        if (m_CurrentHealth <= 0)
-        {
-            Die();
-            return;
-        }
+
+        CheckHealthAndTriggerDeath();
         GetComponent<EnemyNormalMovement>().PlayerInSight();
         GetDamageAnimation();
     }
