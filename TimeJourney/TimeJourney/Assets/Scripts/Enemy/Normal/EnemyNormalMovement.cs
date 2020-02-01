@@ -2,19 +2,33 @@
 
 public class EnemyNormalMovement : EnemyMovement
 {
-
+    // The possible patrolling positions
     public float[] m_patrolPosition;
 
+    // The next position of the enemy
     [SerializeField] private int nextPosition;
-    private Vector3 m_playerLastPosition;
-    private Transform m_playerBodyCollider;
-    private bool m_checkLastPosition; // say if checked last player position;
-    public bool m_FacingRight;  // direction currently facing.
 
+    // The player's last position
+    private Vector3 m_playerLastPosition;
+
+    // The collider of the player's body
+    private Transform m_playerBodyCollider;
+
+    // Say if checked last player position;
+    private bool m_checkLastPosition;
+
+    // Direction currently facing.
+    public bool m_FacingRight;  
+
+    // Bool indicating if the enemy is in chase state 
     private bool enterStateChase;
+
+    // Bool indicating if the enemy is in patrol state
     private bool enterStatePatrol;
 
-
+    /// <summary>
+    /// The method called when the script on the object is enabled (before any update frame)
+    /// </summary>
     private void Start()
     {
         m_playerBodyCollider = GameController.instance.player.transform.GetChild(5).GetChild(0).transform;
@@ -31,6 +45,9 @@ public class EnemyNormalMovement : EnemyMovement
         enterStateChase = false;
     }
 
+    /// <summary>
+    /// Method called every frame
+    /// </summary>
     private void Update()
     {
         if (!m_playerInSight)

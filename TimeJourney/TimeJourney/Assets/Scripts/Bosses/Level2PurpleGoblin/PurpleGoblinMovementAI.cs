@@ -3,21 +3,38 @@ using UnityEngine;
 
 public class PurpleGoblinMovementAI : MonoBehaviour
 {
+
+    // The position of the player shot
     [Tooltip("Player ShotPosition(center of the player)")]
     public Transform playerShotPosition;
 
+    // The speed of the goblin
     public float speed = 400f;
+
+    // The distance to the next Waypoint
     public float nextWaypointDistance = 1f;
 
+    // The path of the goblin
     Path path;
+
+    // The current waypoint
     int currentWaypoint = 0;
+
+    // Boolean indicating if the goblin has reached the end of the path
     public bool reachedEndOfPath = false;
 
+    // The seeker of the goblin
     Seeker seeker;
+
+    // The rigidbody of the goblin
     Rigidbody2D rb;
 
+    // The enemy GFX
     private Transform enemyGFX;
 
+    /// <summary>
+    /// The method called when the script on the object is enabled (before any update frame)
+    /// </summary>
     void Start()
     {
         seeker = GetComponent<Seeker>();
@@ -25,16 +42,25 @@ public class PurpleGoblinMovementAI : MonoBehaviour
         enemyGFX = transform.GetChild(0);
     }
 
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
     public void OnEnable()
     {
         InvokeRepeating("UpdatePath", 0, .5f);
     }
 
+    /// <summary>
+    /// The function called when the behaviour becomes disabled.
+    /// </summary>
     public void OnDisable()
     {
         CancelInvoke("UpdatePath");
     }
 
+    /// <summary>
+    /// Updates the path of the goblin
+    /// </summary>
     void UpdatePath()
     {
         if (seeker.IsDone())
@@ -43,6 +69,10 @@ public class PurpleGoblinMovementAI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called when path is completed
+    /// </summary>
+    /// <param name="p"></param>
     void OnPathComplete(Path p)
     {
         if (!p.error)
@@ -52,6 +82,9 @@ public class PurpleGoblinMovementAI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Method called every fixed frame-rate frame
+    /// </summary>
     void FixedUpdate()
     {
         if (path == null)
@@ -70,8 +103,12 @@ public class PurpleGoblinMovementAI : MonoBehaviour
         }
 
         Move();
+
     }
 
+    /// <summary>
+    /// Moves the goblin according to the path
+    /// </summary>
     public void Move()
     {
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;

@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class DialogWithAction : MonoBehaviour
 {
+    // The main dialog sentence
     public string[] dialogSentence;
+
+    // The extra dialog sentences
     public string[] nextDialogSentences;
+
+    // The index of the dialog sentence
     public int index;
+
+    // The typing speed of the dialog animation
     public float typingSpeed = 0.015f;
+
+    // The type of the dialog
     private IEnumerator type;
-    public int endedDialogCount; // 
+
+    // The count of finished dialogs
+    public int endedDialogCount;
+
+    // Bool indicating wether the next line should be displayed
     private bool nextLine;
+
+    // Bool indicating that the dialog ended
     public bool dialogEnded;
 
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
     void OnEnable()
     {
         DialogsController.instance.textBackGround.SetActive(true);
@@ -21,7 +39,9 @@ public class DialogWithAction : MonoBehaviour
         StartCoroutine(type);
     }
 
-
+    /// <summary>
+    /// Method called every frame
+    /// </summary>
     private void Update()
     {
         if (DialogsController.instance.textDisplay.text == dialogSentence[index])

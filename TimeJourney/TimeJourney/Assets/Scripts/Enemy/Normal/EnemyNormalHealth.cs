@@ -4,24 +4,34 @@ using UnityEngine;
 public class EnemyNormalHealth : Health
 {
     //[HideInInspector] public Animator m_animator;
-
+    
+    // The damage animation
     private IEnumerator damageAnimation;
+
+    // The particle system of the enemy
     private ParticleSystem body;
 
+    //Boolean indicate if enemy is weak to fire
     public bool weakAtFire;
+    //Boolean indicate if enemy is imune to fire
     public bool ImuneAtFire;
+    //Boolean indicate if enemy is weak to ice
     public bool weakAtIce;
+    //Boolean indicate if enemy is imune to ice
     public bool ImuneAtIce;
+    //Boolean indicate if enemy is weak to light
     public bool weakAtLight;
+    //Boolean indicate if enemy is imune to light
     public bool ImuneAtLight;
 
-
+    /// <summary>
+    /// The method called when the script on the object is enabled (before any update frame)
+    /// </summary>
     public override void Start()
     {
         base.Start();
         body = GetComponentInChildren<ParticleSystem>();
     }
-
 
     public override void GetDamage(int dmgAmount)
     {
@@ -80,6 +90,9 @@ public class EnemyNormalHealth : Health
         Destroy(transform.parent.gameObject);
     }
 
+    /// <summary>
+    /// Gets and starts damage animation
+    /// </summary>
     public override void GetDamageAnimation()
     {
         PrepareNextDamageAnimation();
@@ -87,11 +100,19 @@ public class EnemyNormalHealth : Health
         StartCoroutine(damageAnimation);
     }
 
+    /// <summary>
+    /// Prepares next damage animation
+    /// </summary>
     public void PrepareNextDamageAnimation()
     {
         StopAllCoroutines();
     }
 
+
+    /// <summary>
+    /// `The Damage animation, makes the Goblin blink
+    /// </summary>
+    /// <returns>IEnumarator for the interval of the blinks</returns>
     public IEnumerator DamageAnimation()
     {
         for (int i = 0; i < 13; i++)

@@ -3,8 +3,42 @@ using UnityEngine;
 
 public class StoneAttacks : MonoBehaviour
 {
+    // The stone attacks instance
     public static StoneAttacks instance;
 
+    // The FireWeapon delegate function
+    public Action FireWeapon = delegate { };
+
+    // The player instance
+    private PlayerMovementWithSword pmws;
+
+    // The target of the attack
+    private Vector3 target;
+
+    // The camera of the scene
+    public Camera cam;
+
+    // Position from where shots begin
+    public Transform shotPosition;
+
+    // Parent for the current shots to use, may change for diferent shots
+    public GameObject shotsParent;
+
+    // GameObject to instantiate if we don't have enough shots
+    public GameObject shot;
+
+    // The current shot of the stone
+    private GameObject currentShot;
+
+    // Bool indicating if levtiation is enabled
+    public bool levitation;
+
+    // Layer mask for the levitation feature
+    public LayerMask levitationLayerMask;
+
+    /// <summary>
+    /// The method called when the script instance is being loaded.
+    /// </summary>
     void Awake()
     {
         if (instance != null && instance != this)
@@ -17,26 +51,19 @@ public class StoneAttacks : MonoBehaviour
         }
     }
 
-    public Action FireWeapon = delegate { };
-    private PlayerMovementWithSword pmws;
-
-    private Vector3 target;
-    public Camera cam;
-
-    public Transform shotPosition; // position from where shots begin
-
-    public GameObject shotsParent; // Parent for the current shots to use, may change for diferent shots
-    public GameObject shot; // gameObject to instantiate if we don't have enought 
-    private GameObject currentShot;
-    public bool levitation;
-    public LayerMask levitationLayerMask;
-
+    /// <summary>
+    /// The method called when the script on the object is enabled (before any update frame)
+    /// </summary>
     private void Start()
     {
+        // Get PlayerMovement with sword component
         pmws = GameController.instance.player.GetComponent<PlayerMovementWithSword>();
         FireWeapon = StoneAttack;
     }
 
+    /// <summary>
+    /// Method called every frame
+    /// </summary>
     private void Update()
     {
         if (Input.GetMouseButtonDown(1) && pmws.canAttack)
@@ -45,6 +72,9 @@ public class StoneAttacks : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Start the levitation stone feature
+    /// </summary>
     public void StoneLevitation()
     {
         StoneAnimation();
@@ -61,26 +91,41 @@ public class StoneAttacks : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Starts the stone animation
+    /// </summary>
     public void StoneAttack()
     {
         StoneAnimation();
     }
 
+    /// <summary>
+    /// Instantiates shot
+    /// </summary>
     public void Shot()
     {
+        // Levitation stone is the only one to not instantiate shots
         if (!levitation)
         {
             currentShot = GetNextShot();
+            // instantiate shot
             StoneInstantiate(currentShot, shotPosition.position);
         }
     }
 
+    /// <summary>
+    /// Triggers the StoneAnimation
+    /// </summary>
     public void StoneAnimation()
     {
         pmws.canAttack = false;
         pmws.animator.SetTrigger("StoneAttack");
     }
 
+    /// <summary>
+    /// Gets next shot
+    /// </summary>
+    /// <returns>The gameobject of the shot</returns>
     public GameObject GetNextShot()
     {
         for (int i = 0; i < shotsParent.transform.childCount; i++)
@@ -96,6 +141,11 @@ public class StoneAttacks : MonoBehaviour
         return newShot;
     }
 
+    /// <summary>
+    /// Instantiates shot
+    /// </summary>
+    /// <param name="shot">The shot gameObject</param>
+    /// <param name="positionToInstantiate">The position to instantiate the shot</param>
     public void StoneInstantiate(GameObject shot, Vector2 positionToInstantiate)
     {
         shot.transform.position = positionToInstantiate;

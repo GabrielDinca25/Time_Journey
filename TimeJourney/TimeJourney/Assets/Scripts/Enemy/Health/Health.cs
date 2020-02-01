@@ -2,7 +2,10 @@
 
 public class Health : MonoBehaviour
 {
+    // The max default health points
     public int m_maxHp = 100;
+
+    // The current health of the object
     public int m_CurrentHealth;
 
     public virtual void Start()
@@ -23,6 +26,10 @@ public class Health : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+
+    /// <summary>
+    /// Gets and starts damage animation
+    /// </summary>
     public virtual void GetDamageAnimation()
     {
     }

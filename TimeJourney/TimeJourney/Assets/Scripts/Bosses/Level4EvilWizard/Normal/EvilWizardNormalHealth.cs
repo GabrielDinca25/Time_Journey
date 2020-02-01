@@ -3,11 +3,21 @@ using UnityEngine;
 
 public class EvilWizardNormalHealth : Health
 {
+    // The damage animation
     private IEnumerator damageAnimation;
+
+    // The body parts of the sprite renderer
     public SpriteRenderer[] bodyParts;
+
+    // Bool indicating if the wizard should receive damage 
     public bool receiveDMG;
+
+    // The collider of the whole scene
     public GameObject sceneCollider;
 
+    /// <summary>
+    /// The method called when the script on the object is enabled (before any update frame)
+    /// </summary>
     public override void Start()
     {
         base.Start();
@@ -46,6 +56,10 @@ public class EvilWizardNormalHealth : Health
 
     }
 
+    /// <summary>
+    /// Sets the color state of the wizard
+    /// </summary>
+    /// <param name="canReceiveDamage">Boolean indicating if the boss in the receive damage mode</param>
     public void SetBossColorState(bool canReceiveDamage)
     {
         Color newColor;
@@ -66,12 +80,19 @@ public class EvilWizardNormalHealth : Health
         }
     }
 
+    /// <summary>
+    /// Gets and starts damage animation
+    /// </summary>
     public override void GetDamageAnimation()
     {
         damageAnimation = DamageAnimation();
         PrepareNextDamageAnimation();
         StartCoroutine(damageAnimation);
     }
+
+    /// <summary>
+    /// Prepares next damage animation
+    /// </summary>
     public void PrepareNextDamageAnimation()
     {
         StopAllCoroutines();
@@ -81,6 +102,10 @@ public class EvilWizardNormalHealth : Health
         }
     }
 
+    /// <summary>
+    /// `The Damage animation, makes the Goblin blink
+    /// </summary>
+    /// <returns>IEnumarator for the interval of the blinks</returns>
     public IEnumerator DamageAnimation()
     {
         for (int i = 0; i < 12; i++)
@@ -106,8 +131,8 @@ public class EvilWizardNormalHealth : Health
 
     void Disable()
     {
+        //Disables the gameObject
         gameObject.SetActive(false);
         sceneCollider.SetActive(false);
-
     }
 }

@@ -4,18 +4,10 @@ using UnityEngine;
 
 public class WaterCollision : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// Sent when another object enters a trigger collider attached to this object
+    /// </summary>
+    /// <param name="other">The collider of the object that enters the trigger attached to this object</param>
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Enemy")

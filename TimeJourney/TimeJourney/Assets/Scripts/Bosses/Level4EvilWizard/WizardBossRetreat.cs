@@ -4,6 +4,9 @@ public class WizardBossRetreat : MonoBehaviour
 {
     public GameObject portal;
 
+    /// <summary>
+    /// Method called every frame
+    /// </summary>
     private void Update()
     {
         transform.localScale -= new Vector3(0.01f, 0.01f, 0);

@@ -3,21 +3,38 @@ using UnityEngine;
 
 public class EnemyAIMovement : MonoBehaviour
 {
+    // The position of the player attack
     [Tooltip("Player AttackPosition(center of the player)")]
     public Transform playerAttackPosition;
 
+    // The array of possible patrolling positions
     public Vector3[] patrollingPositions;
+
+    // The next position of the enemys
     private int nextPosition;
 
+    // Bool indicating if the enemy is patrolling
     public bool patrolling;
+
+    // The patrolling speed of the enemy
     public float speed = 400f;
+
+    // The distance to the next waypoint
     public float nextWaypointDistance = 1f;
 
+    // The path of the enemy
     Path path;
+    
+    // The current waypoint
     int currentWaypoint = 0;
+
+    // Bool indicating if the end of the path has been reached
     public bool reachedEndOfPath = false;
 
+    // The seeker of the enemy
     Seeker seeker;
+
+    // The rigidbody of the enemy
     Rigidbody2D rb;
 
     void Start()
@@ -27,18 +44,26 @@ public class EnemyAIMovement : MonoBehaviour
         nextPosition = 0;
     }
 
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
     public void OnEnable()
     {
         InvokeRepeating("UpdatePath", 0, .5f);
         patrolling = true;
     }
 
+    /// <summary>
+    /// The function called when the behaviour becomes disabled.
+    /// </summary>
     public void OnDisable()
     {
         CancelInvoke("UpdatePath");
     }
 
-
+    /// <summary>
+    /// Updates the path of the wizarda
+    /// </summary>
     void UpdatePath()
     {
         if (seeker.IsDone())
@@ -63,6 +88,9 @@ public class EnemyAIMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Method called every fixed frame-rate frame
+    /// </summary>
     void FixedUpdate()
     {
         if (path == null)

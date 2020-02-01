@@ -10,11 +10,18 @@ public class MultiSwitchManager : MonoBehaviour
 
     public float timeToBeAlive = 5;
 
+    /// <summary>
+    /// The method called when the script on the object is enabled (before any update frame)
+    /// </summary>
     private void Start()
     {
         switchesStates = new bool[switches.Length];
     }
 
+    /// <summary>
+    /// Updates the state of the switch to given state
+    /// </summary>
+    /// <param name="name"></param>
     public void UpdateStateOfSwitch(string name)
     {
         for (int i = 0; i < switches.Length; i++)
@@ -26,6 +33,10 @@ public class MultiSwitchManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates the state of the switch by given order
+    /// </summary>
+    /// <param name="number">The order of the swithc</param>
     public void SetSwitchState(int number)
     {
         switchesStates[number] = !switchesStates[number];
@@ -36,6 +47,10 @@ public class MultiSwitchManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks if all switches are enabled
+    /// </summary>
+    /// <returns>True if all switches are enabled, false otherwise</returns>
     public bool CheckSwitches()
     {
         for (int i = 0; i < switchesStates.Length; i++)
@@ -48,12 +63,18 @@ public class MultiSwitchManager : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Activates gameObject
+    /// </summary>
     public void ActivateObject()
     {
         objectToActivate.SetActive(true);
         Invoke("TimesUP", timeToBeAlive);
     }
 
+    /// <summary>
+    /// Resets the switch states
+    /// </summary>
     public void Reset()
     {
         for (int i = 0; i < switches.Length; i++)
@@ -67,6 +88,9 @@ public class MultiSwitchManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Resets switches after time is up
+    /// </summary>
     public void TimesUP()
     {
         Reset();

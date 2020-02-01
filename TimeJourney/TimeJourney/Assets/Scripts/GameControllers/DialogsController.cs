@@ -9,6 +9,9 @@ public class DialogsController : MonoBehaviour
     public TextMeshProUGUI textDisplay;
     public GameObject textBackGround;
 
+    /// <summary>
+    /// The method called when the script instance is being loaded.
+    /// </summary>
     void Awake()
     {
         if (instance != null && instance != this)

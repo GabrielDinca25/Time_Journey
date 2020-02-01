@@ -3,14 +3,25 @@ using UnityEngine;
 
 public class FinalBossEnter : MonoBehaviour
 {
+    // The body parts of the sprite renderer
     public SpriteRenderer[] bodyParts;
+
+    // The IEnumerator for the black color applied to the final boss
     private IEnumerator black;
 
+    /// <summary>
+    /// Sent when another object enters a trigger collider attached to this object
+    /// </summary>
+    /// <param name="other">The collider of the object that enters the trigger attached to this object</param>
     private void OnTriggerEnter2D(Collider2D other)
     {
         StartCoroutine(Black());
     }
 
+    /// <summary>
+    /// Changes the color of the body parts of the final boss
+    /// </summary>
+    /// <returns></returns>
     IEnumerator Black()
     {
         float colorValue = 1;
@@ -26,6 +37,9 @@ public class FinalBossEnter : MonoBehaviour
         Invoke("Disable", 1f);
     }
 
+    /// <summary>
+    /// Destroys the gameObject
+    /// </summary>
     private void Disable()
     {
         Destroy(gameObject);

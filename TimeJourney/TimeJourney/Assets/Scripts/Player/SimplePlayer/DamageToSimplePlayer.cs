@@ -5,7 +5,11 @@ using UnityEngine;
 public class DamageToSimplePlayer : MonoBehaviour
 {
     public GameObject simplePlayer;
-    
+
+    /// <summary>
+    /// Sent when an incoming collider makes contact with this object's collider
+    /// </summary>
+    /// <param name="other">The collider of the object that makes contact to the collider attached to this object</param>
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))

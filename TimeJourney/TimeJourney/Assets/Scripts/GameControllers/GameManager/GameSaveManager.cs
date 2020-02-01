@@ -9,6 +9,9 @@ public class GameSaveManager : MonoBehaviour
 
     public SaveSystemSO saveSystemSO;
 
+    /// <summary>
+    /// The method called when the script instance is being loaded.
+    /// </summary>
     void Awake()
     {
         if (instance == null)
@@ -24,6 +27,9 @@ public class GameSaveManager : MonoBehaviour
         Load();
     }
 
+    /// <summary>
+    /// Saves the state of the game
+    /// </summary>
     public void Save()
     {
         BinaryFormatter bf = new BinaryFormatter();
@@ -40,6 +46,13 @@ public class GameSaveManager : MonoBehaviour
         file.Close();
     }
 
+    /// <summary>
+    /// Sets the saved data of the players
+    /// </summary>
+    /// <param name="posX">The player X coord</param>
+    /// <param name="posY">The player T coord</param>
+    /// <param name="sceneName">The scene name</param>
+    /// <param name="difficulty">The difficulty chosen</param>
     public void SetSaveSystemPlayerData(float posX, float posY, string sceneName, string difficulty)
     {
         saveSystemSO.m_PlayerPositionX = posX;
@@ -48,6 +61,9 @@ public class GameSaveManager : MonoBehaviour
         saveSystemSO.m_Difficulty = difficulty;
     }
 
+    /// <summary>
+    /// Loads the saved data
+    /// </summary>
     public void Load()
     {
         if (File.Exists(Application.persistentDataPath + "/playerinfo.dat"))

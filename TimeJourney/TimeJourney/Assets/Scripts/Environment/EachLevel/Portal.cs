@@ -4,10 +4,18 @@ using UnityEngine.SceneManagement;
 
 public class Portal : MonoBehaviour
 {
+    // The next scene name
     public string m_NextSceneName;
+
+    // The save system SO instance
     public SaveSystemSO saveSystemSO;
+
+    // The fade effect gameObject
     public GameObject fade;
+
+    // Bool indicating if non level scene must be switched
     public bool switchToNonLevelScene;
+
     public bool onTrigger;
 
     public void Start()
@@ -19,6 +27,9 @@ public class Portal : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Method called every frame
+    /// </summary>
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && onTrigger)
@@ -27,6 +38,10 @@ public class Portal : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sent when another object enters a trigger collider attached to this object
+    /// </summary>
+    /// <param name="other">The collider of the object that enters the trigger attached to this object</param>
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -35,6 +50,10 @@ public class Portal : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sent when another object leaves a trigger collider attached to this object
+    /// </summary>
+    /// <param name="other">The collider of the object that leaves the trigger attached to this object</param>
     public void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))

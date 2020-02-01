@@ -4,16 +4,30 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    // Game controller singleton
     public static GameController instance;
+
+    // The player gameObject
     public GameObject player;
+
+    // The swordLogic gameObject
     public GameObject swordLogic;
+
+    // The save system gameObject
     public SaveSystemSO saveSystemSO;
+
+    // Boolean indicating if the game should be over
     private bool m_death;
 
+    // Custom special action to be done 
     public Action SpecialAction = delegate { };
-    // Menu
+
+    // The menu gameObject
     GameObject m_Menu;
 
+    /// <summary>
+    /// The method called when the script instance is being loaded.
+    /// </summary>
     void Awake()
     {
         if (instance != null && instance != this)
@@ -27,40 +41,55 @@ public class GameController : MonoBehaviour
         LoadGame();
     }
 
+    /// <summary>
+    /// Method called every frame
+    /// </summary>
     public void Update()
     {
+        // Check key inputs
         if (Input.GetKeyDown(KeyCode.F1))
         {
+            // Go to main menu
             SceneManager.LoadScene("Menu");
         }
         if (Input.GetKeyDown(KeyCode.F2))
         {
+            // Load active scene
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            // Go to main menu
             SceneManager.LoadScene("Menu");
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
+            //Load saved game
             saveSystemSO.m_LoadGame = true;
             LoadGame();
         }
-
     }
-
+    
+    /// <summary>
+    /// Ends the game
+    /// </summary>
     public void GameOver()
     {
         if (!m_death)
         {
             m_death = true;
 
+            // Stop the time
             Time.timeScale = 0;
 
+            // Revive player
             Revive();
         }
     }
 
+    /// <summary>
+    /// Revives the player
+    /// </summary>
     private void Revive()
     {
         string currentSceneName = saveSystemSO.m_SceneName + saveSystemSO.m_Difficulty;
@@ -78,6 +107,9 @@ public class GameController : MonoBehaviour
         player.GetComponent<PlayerHealth>().Revive();
     }
 
+    /// <summary>
+    /// Saves the game
+    /// </summary>
     public void SaveGame()
     {
         saveSystemSO.m_PlayerPositionX = player.transform.position.x;
@@ -98,8 +130,12 @@ public class GameController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Loads the game
+    /// </summary>
     public void LoadGame()
     {
+        // Check if the current scene name is not the active scene
         string currentSceneName = saveSystemSO.m_SceneName + saveSystemSO.m_Difficulty;
         if (!currentSceneName.Equals(SceneManager.GetActiveScene().name))
         {
@@ -132,12 +168,14 @@ public class GameController : MonoBehaviour
         saveSystemSO.m_LoadGame = false;
     }
 
+    /// <summary>
+    /// Saves Level 1
+    /// </summary>
     public void SaveLevel1()
     {
         saveSystemSO.m_PlayerPositionX = 0;
         saveSystemSO.m_PlayerPositionY = 0;
         //save current level name without the m_difficulty
-
 
         if (saveSystemSO.m_SceneName.Equals("IntroCity"))
         {
@@ -168,6 +206,9 @@ public class GameController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Does special action
+    /// </summary>
     public void DoSpecialAction()
     {
         SpecialAction();

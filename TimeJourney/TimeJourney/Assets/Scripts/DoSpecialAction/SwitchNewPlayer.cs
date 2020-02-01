@@ -2,17 +2,31 @@
 
 public class SwitchNewPlayer : MonoBehaviour
 {
+    // The simple player camera instance
     public Cinemachine.CinemachineVirtualCamera simplePlayerCam;
+
+    // The sword player camera instance
     public Cinemachine.CinemachineVirtualCamera playerCam;
+
+    // The sword logic gameObject
     public GameObject swordLogic;
+
+    // The stone logic gameObject
     public GameObject stoneLogic;
+
+    // The simple player gameObject
     public GameObject simplePlayerObject;
+
+    // The sword and stone tutorial dialog game object
     public GameObject useSwordAndStoneTutorial;
+
+    // The enemy body game object
     [Tooltip("The first enemy body for getting components")]
     public GameObject enemyBody;
 
-
-
+    /// <summary>
+    /// The method called when the script on the object is enabled (before any update frame)
+    /// </summary>
     private void Start()
     {
         if (simplePlayerObject != null && simplePlayerObject.transform.position == Vector3.zero)
@@ -27,6 +41,9 @@ public class SwitchNewPlayer : MonoBehaviour
         enabled = false;
     }
 
+    /// <summary>
+    /// Enables the items of the player
+    /// </summary>
     public void GivePlayerItems()
     {
         swordLogic.SetActive(true);

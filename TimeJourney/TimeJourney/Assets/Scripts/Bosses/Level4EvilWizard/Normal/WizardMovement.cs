@@ -3,33 +3,57 @@ using UnityEngine;
 
 public class WizardMovement : MonoBehaviour
 {
+    // The palyer shot position
     [Tooltip("Player ShotPosition(center of the player)")]
     public Transform playerShotPosition;
 
+    // The speed of the wizard
     public float speed = 400f;
+
+    // The next waypoint wizard
     public float nextWaypointDistance = 1f;
+
+    // The scale of the wizard
     public float localScale = 1f;
 
+    // The path of the wizard
     Path path;
+
+    // The current waypoint
     int currentWaypoint = 0;
+
+    // Boolean indicatin if the end of the path has been reached
     public bool reachedEndOfPath = false;
 
+    // The seeker of the wizard
     Seeker seeker;
+
+    // The rigid body of the wizard
     Rigidbody2D rb;
 
+    // Boolean indicating if the wizard should attack
     public bool attack;
 
+    /// <summary>
+    /// The method called when the script on the object is enabled (before any update frame)
+    /// </summary>
     void Start()
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
     }
 
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
     public void OnEnable()
     {
         InvokeRepeating("UpdatePath", 0, .5f);
     }
 
+    /// <summary>
+    /// The function called when the behaviour becomes disabled.
+    /// </summary>
     public void OnDisable()
     {
         CancelInvoke("UpdatePath");
@@ -56,6 +80,9 @@ public class WizardMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Method called every fixed frame-rate frame
+    /// </summary>
     void FixedUpdate()
     {
         if (path == null)

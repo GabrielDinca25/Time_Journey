@@ -3,12 +3,22 @@ using UnityEngine;
 
 public class BossDamageToPlayer : MonoBehaviour
 {
+    // The enemy damage amount
     public int m_enemyDamageAmount = 40;
+    
+    // The delay between attacks
     public float m_delayBetweenAttacks = 0.5f;
-    private bool dmg; // check if should apply next dmg to player
 
+    // Check if should apply next dmg to player
+    private bool dmg; 
+
+    // the damage to player
     private IEnumerator damageToPlayer;
 
+    /// <summary>
+    /// Sent when another object enters a trigger collider attached to this object
+    /// </summary>
+    /// <param name="other">The collider of the object that enters the trigger attached to this object</param>
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -19,6 +29,10 @@ public class BossDamageToPlayer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// `The Damage animation, makes the Goblin blink
+    /// </summary>
+    /// <returns>IEnumarator for the interval of the blinks</returns>
     public IEnumerator DamageAnimation()
     {
         while (true)
@@ -28,6 +42,10 @@ public class BossDamageToPlayer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sent when another object leaves a trigger collider attached to this object
+    /// </summary>
+    /// <param name="other">The collider of the object that leaves the trigger attached to this object</param>
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))

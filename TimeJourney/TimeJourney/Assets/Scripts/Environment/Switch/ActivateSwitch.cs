@@ -9,6 +9,9 @@ public class ActivateSwitch : MonoBehaviour
     public Sprite state1;
     public Sprite state2;
 
+    /// <summary>
+    /// The method called when the script on the object is enabled (before any update frame)
+    /// </summary>
     private void Start()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -16,6 +19,10 @@ public class ActivateSwitch : MonoBehaviour
         platformToMove.GetComponent<MovePlatform>().enabled = false;
     }
 
+    /// <summary>
+    /// Sent when another object enters a trigger collider attached to this object
+    /// </summary>
+    /// <param name="other">The collider of the object that enters the trigger attached to this object</param>
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Shot"))
@@ -23,6 +30,7 @@ public class ActivateSwitch : MonoBehaviour
             SwitchState();
             platformToMove.GetComponent<MovePlatform>().m_GoToNextPosition = state;
             platformToMove.GetComponent<MovePlatform>().enabled = true;
+            //Disables the gameObject
             other.gameObject.SetActive(false);
         }
     }

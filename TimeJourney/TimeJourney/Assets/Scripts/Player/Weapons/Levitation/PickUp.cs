@@ -2,6 +2,9 @@
 
 public class PickUp : MonoBehaviour
 {
+    /// <summary>
+    /// Method called every frame
+    /// </summary>
     void Update()
     {
         if (Input.GetMouseButtonUp(1))
@@ -11,16 +14,26 @@ public class PickUp : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, StoneAttacks.instance.cam.ScreenToWorldPoint(Input.mousePosition), 2f * Time.deltaTime);
     }
 
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
     private void OnEnable()
     {
         GetComponent<Rigidbody2D>().gravityScale = 0;
     }
 
+    /// <summary>
+    /// The function called when the behaviour becomes disabled.
+    /// </summary>
     private void OnDisable()
     {
         GetComponent<Rigidbody2D>().gravityScale = 1;
     }
 
+    /// <summary>
+    /// Sent when an incoming collider makes contact with this object's collider
+    /// </summary>
+    /// <param name="other">The collider of the object that makes contact to the collider attached to this object</param>
     private void OnCollisionEnter2D(Collision2D other)
     {
         enabled = false;

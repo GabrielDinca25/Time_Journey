@@ -3,22 +3,48 @@ using UnityEngine;
 
 public class PortalHurting : MonoBehaviour
 {
+    // The portal animation
     private IEnumerator portalAnimation;
+
+    // The renderer of the portal particle system
     private ParticleSystemRenderer portalRenderer;
+
+    // The circle collider of the portal
     private CircleCollider2D cc2D;
 
+    // The enemy damage amount
+    public int m_enemyDamageAmount = 20;
+    
+    // The delay between attacks 
+    public float m_delayBetweenAttacks = 0.5f;
+
+    // check if should apply next damage to player
+    private bool dmg; 
+
+    private IEnumerator damageToPlayer;
+
+    /// <summary>
+    /// The method called when the script instance is being loaded.
+    /// </summary>
     private void Awake()
     {
         portalRenderer = GetComponentInChildren<ParticleSystem>().GetComponent<ParticleSystemRenderer>();
         cc2D = GetComponent<CircleCollider2D>();
     }
 
+    /// <summary>
+    /// This function is called when the object becomes enabled and active.
+    /// </summary>
     private void OnEnable()
     {
         portalAnimation = PortalIncreaseAnimation();
         StartCoroutine(portalAnimation);
     }
 
+    /// <summary>
+    /// Increases the portal size
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator PortalIncreaseAnimation()
     {
         while (portalRenderer.minParticleSize < 0.3f)
@@ -34,6 +60,10 @@ public class PortalHurting : MonoBehaviour
         StartCoroutine(portalAnimation);
     }
 
+    /// <summary>
+    /// Decreases the portal size
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator PortalDecreaseAnimation()
     {
         while (portalRenderer.maxParticleSize > 0)
@@ -46,12 +76,10 @@ public class PortalHurting : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public int m_enemyDamageAmount = 20;
-    public float m_delayBetweenAttacks = 0.5f;
-    private bool dmg; // check if should apply next dmg to player
-
-    private IEnumerator damageToPlayer;
-
+    /// <summary>
+    /// Sent when another object enters a trigger collider attached to this object
+    /// </summary>
+    /// <param name="other">The collider of the object that enters the trigger attached to this object</param>
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -61,6 +89,10 @@ public class PortalHurting : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// `The Damage animation, makes the Goblin blink
+    /// </summary>
+    /// <returns>IEnumarator for the interval of the blinks</returns>
     public IEnumerator DamageAnimation()
     {
         while (true)
@@ -70,6 +102,10 @@ public class PortalHurting : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sent when another object leaves a trigger collider attached to this object
+    /// </summary>
+    /// <param name="other">The collider of the object that leaves the trigger attached to this object</param>
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))

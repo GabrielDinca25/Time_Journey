@@ -21,6 +21,9 @@ public class SimplePlayerHealth : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// The method called when the script on the object is enabled (before any update frame)
+    /// </summary>
     private void Start()
     {
         m_CurrentHealth = m_maxHp;
@@ -36,7 +39,9 @@ public class SimplePlayerHealth : MonoBehaviour
         }   
     }
 
-
+    /// <summary>
+    /// Kills the player
+    /// </summary>
     public void Die()
     {
         transform.position = Vector3.zero;
@@ -44,6 +49,9 @@ public class SimplePlayerHealth : MonoBehaviour
         SetHealth();
     }
 
+    /// <summary>
+    /// Sets health of the player
+    /// </summary>
     public void SetHealth()
     {
         float currentHPLost = (m_maxHp - m_currentHealth) / 100;

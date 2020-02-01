@@ -26,6 +26,9 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// The method called when the script on the object is enabled (before any update frame)
+    /// </summary>
     private void Start()
     {
         m_animator = GetComponent<Animator>();
@@ -52,12 +55,19 @@ public class PlayerHealth : MonoBehaviour
         GetDamageAnimation();
     }
 
+    /// <summary>
+    /// Gets and starts damage animation
+    /// </summary>
     public void GetDamageAnimation()
     {
         damageAnimation = DamageAnimation();
         StartCoroutine(damageAnimation);
     }
 
+    /// <summary>
+    /// `The Damage animation, makes the Goblin blink
+    /// </summary>
+    /// <returns>IEnumarator for the interval of the blinks</returns>
     public IEnumerator DamageAnimation()
     {
         for (int i = 0; i < 12; i++)

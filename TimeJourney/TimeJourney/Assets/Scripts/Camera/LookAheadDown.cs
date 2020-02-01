@@ -5,13 +5,20 @@ using UnityEngine;
 
 public class LookAheadDown : MonoBehaviour
 {
+    // The Cinemaching Framing Transposer
     CinemachineFramingTransposer cvc;
 
+    /// <summary>
+    /// The method called when the script instance is being loaded.
+    /// </summary>
     private void Awake()
     {
         cvc = GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>();
     }
 
+    /// <summary>
+    /// Method called every frame
+    /// </summary>
     void Update()
     {
         if (Input.GetKey(KeyCode.S))

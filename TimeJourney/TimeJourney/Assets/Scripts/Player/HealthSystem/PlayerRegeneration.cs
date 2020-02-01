@@ -18,11 +18,17 @@ public class PlayerRegeneration : MonoBehaviour
     public float m_RegenerationStartDelay;
     public float m_RegenerationAmoount;
 
+    /// <summary>
+    /// The method called when the script on the object is enabled (before any update frame)
+    /// </summary>
     private void Start()
     {
         playerhealth = GetComponent<PlayerHealth>();
     }
 
+    /// <summary>
+    /// Method called every frame
+    /// </summary>
     void Update()
     {
         if(m_DamageReceive)
